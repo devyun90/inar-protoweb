@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="ko"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>03-A Terms Agree</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        "surface": "#fcf9f7",
+        "surface-container-lowest": "#ffffff",
+        "surface-container-low": "#f6f3f1",
+        "surface-container": "#f0edeb",
+        "surface-container-high": "#eae8e6",
+        "on-surface": "#1b1c1b",
+        "on-surface-variant": "#4f443f",
+        "outline": "#82746e",
+        "outline-variant": "#d3c3bc",
+        "primary": "#5b4133",
+        "on-primary": "#ffffff",
+        "primary-container": "#755849",
+        "on-primary-container": "#f7d0bd",
+        "secondary": "#755849",
+        "secondary-container": "#ffd8c4",
+        "on-secondary-container": "#795c4d",
+        "error": "#ba1a1a"
+      },
+      fontFamily: {
+        "headline": ["Plus Jakarta Sans", "sans-serif"],
+        "body": ["Quicksand", "sans-serif"]
+      }
+    }
+  }
+}
+</script>
+<style>
+  body { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+  .app-container {
+    width: 390px; height: 844px; margin: 0 auto;
+    background-color: #fcf9f7; position: relative;
+    overflow-y: auto; overflow-x: hidden;
+    box-shadow: 0 0 0 1px rgba(0,0,0,0.05);
+  }
+  .material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  }
+  .cta-gradient {
+    background: linear-gradient(135deg, #755849 0%, #5b4133 100%);
+    box-shadow: 0 8px 30px rgba(117, 88, 73, 0.15);
+  }
+  .cta-disabled {
+    background: linear-gradient(135deg, #755849 0%, #5b4133 100%);
+    opacity: 0.4; cursor: not-allowed;
+  }
+  .check-row { min-height: 48px; display: flex; align-items: center; padding: 12px 0; }
+  .checkbox-custom {
+    width: 24px; height: 24px; border-radius: 8px;
+    border: 2px solid #d3c3bc; background: transparent;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; cursor: pointer; transition: all 0.15s;
+  }
+  .checkbox-custom.checked {
+    background: #755849; border-color: #755849;
+  }
+
+  /* 모바일: 뷰포트 꽉 채움 (앱 느낌) */
+  @media (max-width: 430px) {
+    .app-container {
+      width: 100% !important;
+      height: 100dvh !important;
+      border-radius: 0 !important;
+      box-shadow: none !important;
+    }
+    body {
+      background: #fcf9f7 !important;
+    }
+  }
+</style>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+<div class="app-container flex flex-col">
+
+  <!-- Header -->
+  <header class="flex items-center px-[24px] pt-[56px] pb-[8px]">
+    <button class="w-[48px] h-[48px] flex items-center justify-center -ml-[12px]" aria-label="뒤로가기">
+      <span class="material-symbols-outlined text-on-surface" style="font-size: 24px;">arrow_back</span>
+    </button>
+  </header>
+
+  <!-- Content -->
+  <main class="flex-1 px-[24px] pb-[140px]">
+    <!-- 제목 -->
+    <h1 class="font-headline text-[20px] font-semibold text-on-surface mb-[8px]">약관에 동의해 주세요</h1>
+    <p class="font-body text-[16px] font-medium text-on-surface-variant mb-[24px]">서비스 이용을 위해 아래 약관 동의가 필요해요</p>
+
+    <!-- 전체 동의 카드 -->
+    <div class="bg-surface-container-low rounded-[12px] px-[16px] py-[14px] mb-[16px]">
+      <div class="flex items-center gap-[12px]">
+        <div class="checkbox-custom" role="checkbox" aria-checked="false" aria-label="전체 동의">
+          <span class="material-symbols-outlined text-white text-[18px] hidden">check</span>
+        </div>
+        <span class="font-body text-[16px] font-semibold text-on-surface">전체 동의 (선택 포함)</span>
+      </div>
+    </div>
+
+    <!-- 구분선 -->
+    <div class="h-px bg-outline-variant mb-[8px]"></div>
+
+    <!-- 필수 약관 -->
+    <div class="check-row">
+      <div class="checkbox-custom" role="checkbox" aria-checked="false"></div>
+      <div class="flex-1 ml-[12px]">
+        <span class="font-body text-[15px] font-medium text-on-surface">(필수) 서비스 이용약관</span>
+      </div>
+      <button class="w-[48px] h-[48px] flex items-center justify-center" aria-label="서비스 이용약관 전문 보기">
+        <span class="material-symbols-outlined text-outline" style="font-size: 20px;">chevron_right</span>
+      </button>
+    </div>
+
+    <div class="check-row">
+      <div class="checkbox-custom" role="checkbox" aria-checked="false"></div>
+      <div class="flex-1 ml-[12px]">
+        <span class="font-body text-[15px] font-medium text-on-surface">(필수) 개인정보 수집 및 이용</span>
+      </div>
+      <button class="w-[48px] h-[48px] flex items-center justify-center" aria-label="개인정보 수집 및 이용 전문 보기">
+        <span class="material-symbols-outlined text-outline" style="font-size: 20px;">chevron_right</span>
+      </button>
+    </div>
+
+    <div class="check-row">
+      <div class="checkbox-custom" role="checkbox" aria-checked="false"></div>
+      <div class="flex-1 ml-[12px]">
+        <span class="font-body text-[15px] font-medium text-on-surface">(필수) 개인정보 제3자 제공</span>
+      </div>
+      <button class="w-[48px] h-[48px] flex items-center justify-center" aria-label="개인정보 제3자 제공 전문 보기">
+        <span class="material-symbols-outlined text-outline" style="font-size: 20px;">chevron_right</span>
+      </button>
+    </div>
+
+    <!-- 구분선 -->
+    <div class="h-px bg-outline-variant my-[8px]"></div>
+
+    <!-- 선택 약관 -->
+    <div class="check-row">
+      <div class="checkbox-custom" role="checkbox" aria-checked="false"></div>
+      <div class="flex-1 ml-[12px]">
+        <span class="font-body text-[15px] font-medium text-on-surface">(선택) 마케팅 정보 수신</span>
+      </div>
+      <button class="w-[48px] h-[48px] flex items-center justify-center" aria-label="마케팅 정보 수신 전문 보기">
+        <span class="material-symbols-outlined text-outline" style="font-size: 20px;">chevron_right</span>
+      </button>
+    </div>
+
+    <div class="check-row">
+      <div class="checkbox-custom" role="checkbox" aria-checked="false"></div>
+      <div class="flex-1 ml-[12px]">
+        <span class="font-body text-[15px] font-medium text-on-surface">(선택) 푸시 알림 수신</span>
+      </div>
+      <button class="w-[48px] h-[48px] flex items-center justify-center" aria-label="푸시 알림 수신 전문 보기">
+        <span class="material-symbols-outlined text-outline" style="font-size: 20px;">chevron_right</span>
+      </button>
+    </div>
+  </main>
+
+  <!-- Bottom CTA -->
+  <div class="absolute bottom-0 left-0 right-0 px-[24px] pb-[32px] pt-[24px]" style="background: linear-gradient(to top, #fcf9f7 70%, rgba(252,249,247,0) 100%);">
+    <button class="w-full h-[56px] rounded-full cta-disabled text-white font-body text-[16px] font-semibold flex items-center justify-center"
+            aria-label="동의하고 계속하기" disabled>
+      동의하고 계속하기
+    </button>
+  </div>
+
+
+<!-- 🚨 [임시] 화면 이동 마스터 메뉴 시작 -->
+<div style="position:absolute;bottom:12px;left:12px;z-index:9999;">
+<select onchange="if(this.value)window.location.href=this.value" style="font-size:11px;padding:5px 7px;border-radius:8px;border:1px solid #d3c3bc;background:#f0edeb;color:#4f443f;font-family:'Quicksand',sans-serif;font-weight:600;box-shadow:0 4px 12px rgba(117,88,73,0.15);max-width:150px;cursor:pointer;opacity:0.85;">
+<option value="">📱 화면 이동</option>
+<option value="index.html">01-A 스플래시</option>
+<option value="01-B-force-update.html">01-B 강제 업데이트</option>
+<option value="01-C-server-maintenance.html">01-C 서버 점검</option>
+<option value="02-A-auth-login.html">02-A 로그인</option>
+<option value="03-A-auth-terms-agree.html">03-A 약관 동의</option>
+<option value="04-A-auth-terms-reagree.html">04-A 약관 재동의</option>
+<option value="05-A-server-notice-blocking.html">05-A 공지 (블로킹)</option>
+<option value="05-B-server-notice-popup.html">05-B 공지 (팝업)</option>
+<option value="06-A-onboarding-entry.html">06-A 온보딩 진입</option>
+<option value="06-B-onboarding-invite-input.html">06-B 초대코드 입력</option>
+<option value="06-C-onboarding-invite-confirm.html">06-C 초대 확인</option>
+<option value="07-A-onboarding-baby-profile.html">07-A 아이 프로필</option>
+<option value="09-A-home-record-timeline.html">09-A 기록 타임라인</option>
+<option value="10-A-record-input-fab-select.html">10-A FAB 선택</option>
+<option value="10-B-record-input-breast.html">10-B 모유 입력</option>
+<option value="10-C-record-input-formula.html">10-C 분유 입력</option>
+<option value="11-A-record-input-sleep.html">11-A 수면 입력</option>
+<option value="11-B-record-input-diaper.html">11-B 기저귀 입력</option>
+<option value="12-A-record-detail.html">12-A 기록 상세</option>
+<option value="13-A-record-search.html">13-A 기록 검색</option>
+<option value="14-A-todo-list.html">14-A 할일 목록</option>
+<option value="15-A-todo-notice-detail.html">15-A 할일 상세</option>
+<option value="16-A-metrics-charts.html">16-A 지표 차트</option>
+<option value="17-A-settings-home.html">17-A 설정 홈</option>
+</select>
+</div>
+<!-- 🚨 [임시] 화면 이동 마스터 메뉴 끝 -->
+</div>
+</body></html>

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ko"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>14-A Todo List</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script>
+tailwind.config = {
+  theme: { extend: {
+    colors: {
+      "surface": "#fcf9f7", "surface-container": "#f0edeb", "surface-container-low": "#f6f3f1",
+      "on-surface": "#1b1c1b", "on-surface-variant": "#4f443f",
+      "outline": "#82746e", "outline-variant": "#d3c3bc",
+      "primary": "#5b4133", "primary-container": "#755849",
+      "secondary-container": "#ffd8c4"
+    },
+    fontFamily: { "headline": ["Plus Jakarta Sans","sans-serif"], "body": ["Quicksand","sans-serif"] }
+  }}
+}
+</script>
+<style>
+  body { -webkit-font-smoothing: antialiased; }
+  .app-container { width: 390px; height: 844px; margin: 0 auto; background-color: #fcf9f7; position: relative; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 0 0 1px rgba(0,0,0,0.05); }
+  .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+  .record-card { background-color: #f0edeb; border: 1px solid #d3c3bc; border-radius: 16px; padding: 14px 16px; box-shadow: 0 4px 20px rgba(117,88,73,0.06); }
+  .subtab { padding: 8px 16px; border-radius: 9999px; font-family: 'Quicksand',sans-serif; font-size: 14px; font-weight: 600; }
+  .subtab-active { background: #ffd8c4; color: #5b4133; }
+  .subtab-inactive { color: #82746e; }
+  .checkbox-custom { width: 22px; height: 22px; border-radius: 6px; border: 2px solid #d3c3bc; background: transparent; display: flex; align-items: center; justify-content: center; flex-shrink: 0; cursor: pointer; }
+  .fab { width: 56px; height: 56px; border-radius: 9999px; background: linear-gradient(135deg, #755849 0%, #5b4133 100%); box-shadow: 0 8px 30px rgba(117,88,73,0.15); display: flex; align-items: center; justify-content: center; position: absolute; right: 24px; bottom: 32px; }
+
+  /* 모바일: 뷰포트 꽉 채움 (앱 느낌) */
+  @media (max-width: 430px) {
+    .app-container {
+      width: 100% !important;
+      height: 100dvh !important;
+      border-radius: 0 !important;
+      box-shadow: none !important;
+    }
+    body {
+      background: #fcf9f7 !important;
+    }
+  }
+</style>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+<div class="app-container">
+
+  <!-- App Bar -->
+  <header class="flex items-center justify-between px-[16px] pt-[52px] pb-[8px] flex-shrink-0">
+    <button class="w-[48px] h-[48px] flex items-center justify-center" aria-label="뒤로가기">
+      <span class="material-symbols-outlined text-on-surface" style="font-size: 24px;">arrow_back</span>
+    </button>
+    <span class="font-headline text-[16px] font-semibold text-on-surface">할 일</span>
+    <button class="w-[48px] h-[48px] flex items-center justify-center" aria-label="할일 추가">
+      <span class="material-symbols-outlined text-primary-container" style="font-size: 24px;">add</span>
+    </button>
+  </header>
+
+  <!-- 탭 -->
+  <div class="flex items-center gap-[4px] px-[24px] py-[8px] flex-shrink-0">
+    <div class="subtab subtab-active">진행 중 (3)</div>
+    <div class="subtab subtab-inactive">완료</div>
+  </div>
+
+  <!-- 리스트 -->
+  <main class="flex-1 overflow-y-auto px-[24px] pb-[100px]">
+
+    <!-- 그룹: 오늘 마감 -->
+    <div class="flex items-center gap-[8px] py-[12px]">
+      <span class="font-body text-[12px] font-bold text-outline uppercase tracking-wider">오늘 마감</span>
+      <div class="flex-1 h-px bg-outline-variant"></div>
+    </div>
+
+    <div class="record-card mb-[10px]" role="button" aria-label="예방접종 예약, 6월 30일 마감, 담당 엄마">
+      <div class="flex items-center gap-[12px]">
+        <div class="checkbox-custom" role="checkbox" aria-checked="false"></div>
+        <div class="flex-1">
+          <span class="font-body text-[15px] font-bold text-on-surface">예방접종 예약</span>
+          <div class="flex items-center gap-[8px] mt-[2px]">
+            <span class="font-body text-[12px] font-medium text-on-surface-variant">6/30 마감</span>
+            <span class="font-body text-[12px] font-medium text-outline">· 담당: 엄마</span>
+          </div>
+        </div>
+        <span class="material-symbols-outlined text-outline-variant" style="font-size: 18px;">chevron_right</span>
+      </div>
+    </div>
+
+    <!-- 그룹: 예정 -->
+    <div class="flex items-center gap-[8px] py-[12px]">
+      <span class="font-body text-[12px] font-bold text-outline uppercase tracking-wider">예정</span>
+      <div class="flex-1 h-px bg-outline-variant"></div>
+    </div>
+
+    <div class="record-card mb-[10px]" role="button" aria-label="분유 구매하기, 7월 2일 마감, 담당 아빠">
+      <div class="flex items-center gap-[12px]">
+        <div class="checkbox-custom" role="checkbox" aria-checked="false"></div>
+        <div class="flex-1">
+          <span class="font-body text-[15px] font-bold text-on-surface">분유 구매하기</span>
+          <div class="flex items-center gap-[8px] mt-[2px]">
+            <span class="font-body text-[12px] font-medium text-on-surface-variant">7/02 마감</span>
+            <span class="font-body text-[12px] font-medium text-outline">· 담당: 아빠</span>
+          </div>
+        </div>
+        <span class="material-symbols-outlined text-outline-variant" style="font-size: 18px;">chevron_right</span>
+      </div>
+    </div>
+
+    <div class="record-card mb-[10px]" role="button" aria-label="이유식 재료 준비, 7월 3일 마감, 담당 엄마">
+      <div class="flex items-center gap-[12px]">
+        <div class="checkbox-custom" role="checkbox" aria-checked="false"></div>
+        <div class="flex-1">
+          <span class="font-body text-[15px] font-bold text-on-surface">이유식 재료 준비</span>
+          <div class="flex items-center gap-[8px] mt-[2px]">
+            <span class="font-body text-[12px] font-medium text-on-surface-variant">7/03 마감</span>
+            <span class="font-body text-[12px] font-medium text-outline">· 담당: 엄마</span>
+          </div>
+        </div>
+        <span class="material-symbols-outlined text-outline-variant" style="font-size: 18px;">chevron_right</span>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- FAB -->
+  <div class="fab" aria-label="할일 추가">
+    <span class="material-symbols-outlined text-white" style="font-size: 28px;">add</span>
+  </div>
+
+
+<!-- 🚨 [임시] 화면 이동 마스터 메뉴 시작 -->
+<div style="position:absolute;bottom:12px;left:12px;z-index:9999;">
+<select onchange="if(this.value)window.location.href=this.value" style="font-size:11px;padding:5px 7px;border-radius:8px;border:1px solid #d3c3bc;background:#f0edeb;color:#4f443f;font-family:'Quicksand',sans-serif;font-weight:600;box-shadow:0 4px 12px rgba(117,88,73,0.15);max-width:150px;cursor:pointer;opacity:0.85;">
+<option value="">📱 화면 이동</option>
+<option value="index.html">01-A 스플래시</option>
+<option value="01-B-force-update.html">01-B 강제 업데이트</option>
+<option value="01-C-server-maintenance.html">01-C 서버 점검</option>
+<option value="02-A-auth-login.html">02-A 로그인</option>
+<option value="03-A-auth-terms-agree.html">03-A 약관 동의</option>
+<option value="04-A-auth-terms-reagree.html">04-A 약관 재동의</option>
+<option value="05-A-server-notice-blocking.html">05-A 공지 (블로킹)</option>
+<option value="05-B-server-notice-popup.html">05-B 공지 (팝업)</option>
+<option value="06-A-onboarding-entry.html">06-A 온보딩 진입</option>
+<option value="06-B-onboarding-invite-input.html">06-B 초대코드 입력</option>
+<option value="06-C-onboarding-invite-confirm.html">06-C 초대 확인</option>
+<option value="07-A-onboarding-baby-profile.html">07-A 아이 프로필</option>
+<option value="09-A-home-record-timeline.html">09-A 기록 타임라인</option>
+<option value="10-A-record-input-fab-select.html">10-A FAB 선택</option>
+<option value="10-B-record-input-breast.html">10-B 모유 입력</option>
+<option value="10-C-record-input-formula.html">10-C 분유 입력</option>
+<option value="11-A-record-input-sleep.html">11-A 수면 입력</option>
+<option value="11-B-record-input-diaper.html">11-B 기저귀 입력</option>
+<option value="12-A-record-detail.html">12-A 기록 상세</option>
+<option value="13-A-record-search.html">13-A 기록 검색</option>
+<option value="14-A-todo-list.html">14-A 할일 목록</option>
+<option value="15-A-todo-notice-detail.html">15-A 할일 상세</option>
+<option value="16-A-metrics-charts.html">16-A 지표 차트</option>
+<option value="17-A-settings-home.html">17-A 설정 홈</option>
+</select>
+</div>
+<!-- 🚨 [임시] 화면 이동 마스터 메뉴 끝 -->
+</div>
+</body></html>

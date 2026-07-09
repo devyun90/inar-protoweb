@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="ko"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>09-A Home Record Timeline</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        "surface": "#fcf9f7",
+        "surface-container": "#f0edeb",
+        "surface-container-low": "#f6f3f1",
+        "surface-container-lowest": "#ffffff",
+        "on-surface": "#1b1c1b",
+        "on-surface-variant": "#4f443f",
+        "outline": "#82746e",
+        "outline-variant": "#d3c3bc",
+        "primary": "#5b4133",
+        "primary-container": "#755849",
+        "secondary": "#755849",
+        "secondary-container": "#ffd8c4",
+        "on-secondary-container": "#795c4d"
+      },
+      fontFamily: {
+        "headline": ["Plus Jakarta Sans", "sans-serif"],
+        "body": ["Quicksand", "sans-serif"]
+      }
+    }
+  }
+}
+</script>
+<style>
+  body { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+  .app-container {
+    width: 390px; height: 844px; margin: 0 auto;
+    background-color: #fcf9f7; position: relative;
+    overflow: hidden; display: flex; flex-direction: column;
+    box-shadow: 0 0 0 1px rgba(0,0,0,0.05);
+  }
+  .material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  }
+  .material-symbols-outlined.filled {
+    font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  }
+  .record-card {
+    background-color: #f0edeb;
+    border: 1px solid #d3c3bc;
+    border-radius: 16px;
+    padding: 14px 16px;
+    box-shadow: 0 4px 20px rgba(117, 88, 73, 0.06);
+  }
+  .quick-chip {
+    height: 44px; border-radius: 9999px; padding: 0 16px;
+    display: inline-flex; align-items: center; gap: 6px;
+    background: #f6f3f1; border: 1px solid #d3c3bc;
+    font-family: 'Quicksand', sans-serif; font-size: 13px; font-weight: 600;
+    color: #4f443f; white-space: nowrap; cursor: pointer;
+    transition: all 0.15s;
+  }
+  .quick-chip:active { background: #ffd8c4; border-color: #755849; }
+  .fab {
+    width: 56px; height: 56px; border-radius: 9999px;
+    background: linear-gradient(135deg, #755849 0%, #5b4133 100%);
+    box-shadow: 0 8px 30px rgba(117, 88, 73, 0.15);
+    display: flex; align-items: center; justify-content: center;
+    position: absolute; right: 24px; bottom: 100px;
+  }
+
+  .bottom-nav {
+    height: 80px; background: #ffffff;
+    border-radius: 20px 20px 0 0;
+    box-shadow: 0 -4px 20px rgba(117, 88, 73, 0.06);
+    display: flex; align-items: center; justify-content: space-around;
+    flex-shrink: 0;
+  }
+  .nav-item { display: flex; flex-direction: column; align-items: center; gap: 4px; cursor: pointer; }
+  .nav-pill { padding: 4px 16px; border-radius: 9999px; }
+  .nav-pill-active { background: #ffd8c4; }
+
+  /* 모바일: 뷰포트 꽉 채움 (앱 느낌) */
+  @media (max-width: 430px) {
+    .app-container {
+      width: 100% !important;
+      height: 100dvh !important;
+      border-radius: 0 !important;
+      box-shadow: none !important;
+    }
+    body {
+      background: #fcf9f7 !important;
+    }
+  }
+</style>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+<div class="app-container">
+
+  <!-- Top App Bar (56px, 시안 기준) -->
+  <header class="flex items-center justify-between px-[24px] h-[56px] flex-shrink-0 bg-surface">
+    <div class="flex items-center gap-[10px]">
+      <div class="w-[36px] h-[36px] rounded-full bg-secondary-container flex items-center justify-center">
+        <span class="material-symbols-outlined text-on-surface-variant" style="font-size: 20px; font-variation-settings: 'FILL' 1;">person</span>
+      </div>
+      <h1 class="font-headline text-[18px] font-bold text-primary">하은이</h1>
+    </div>
+    <div class="flex items-center gap-[8px]">
+      <button class="w-[40px] h-[40px] flex items-center justify-center" aria-label="알림">
+        <span class="material-symbols-outlined text-on-surface" style="font-size: 24px;">notifications</span>
+      </button>
+      <button class="w-[40px] h-[40px] flex items-center justify-center" aria-label="일정">
+        <span class="material-symbols-outlined text-on-surface" style="font-size: 24px;">calendar_month</span>
+      </button>
+      <button class="w-[40px] h-[40px] flex items-center justify-center" aria-label="더보기">
+        <span class="material-symbols-outlined text-on-surface" style="font-size: 24px;">more_vert</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- 서브탭 -->
+  <nav class="flex border-b border-outline-variant/30 sticky top-[52px] bg-surface z-40 flex-shrink-0">
+    <button class="flex-1 py-3 font-body text-[14px] font-medium text-on-surface-variant">상태</button>
+    <button class="flex-1 py-3 font-body text-[14px] font-bold text-primary border-b-2 border-primary">기록</button>
+    <button class="flex-1 py-3 font-body text-[14px] font-medium text-on-surface-variant">AI분석</button>
+  </nav>
+
+  <!-- 날짜 네비게이터 + 검색/필터 -->
+  <div class="flex items-center justify-between px-[24px] py-[8px] flex-shrink-0">
+    <div class="flex items-center gap-[8px]">
+      <button class="w-[32px] h-[32px] flex items-center justify-center" aria-label="이전 날짜">
+        <span class="material-symbols-outlined text-on-surface-variant" style="font-size: 20px;">chevron_left</span>
+      </button>
+      <span class="font-body text-[14px] font-bold text-on-surface">6/30 (월)</span>
+      <button class="w-[32px] h-[32px] flex items-center justify-center" aria-label="다음 날짜">
+        <span class="material-symbols-outlined text-on-surface-variant" style="font-size: 20px;">chevron_right</span>
+      </button>
+    </div>
+    <div class="flex items-center gap-[4px]">
+      <button class="w-[36px] h-[36px] flex items-center justify-center" aria-label="검색">
+        <span class="material-symbols-outlined text-on-surface-variant" style="font-size: 20px;">search</span>
+      </button>
+      <button class="w-[36px] h-[36px] flex items-center justify-center" aria-label="필터">
+        <span class="material-symbols-outlined text-on-surface-variant" style="font-size: 20px;">filter_list</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- 퀵등록 영역 -->
+  <div class="flex items-center gap-[8px] px-[24px] py-[8px] overflow-x-auto flex-shrink-0" style="scrollbar-width: none;">
+    <div class="quick-chip">
+      <span class="material-symbols-outlined" style="font-size: 18px;">breastfeeding</span>
+      모유
+    </div>
+    <div class="quick-chip">
+      <span class="material-symbols-outlined" style="font-size: 18px;">baby_changing_station</span>
+      분유
+    </div>
+    <div class="quick-chip">
+      <span class="material-symbols-outlined" style="font-size: 18px;">dark_mode</span>
+      수면
+    </div>
+    <div class="quick-chip">
+      <span class="material-symbols-outlined" style="font-size: 18px;">water_drop</span>
+      기저귀
+    </div>
+    <div class="quick-chip" style="border-style: dashed;">
+      <span class="material-symbols-outlined" style="font-size: 18px;">edit</span>
+    </div>
+  </div>
+
+  <!-- 타임라인 콘텐츠 -->
+  <main class="flex-1 overflow-y-auto px-[24px] pb-[16px]">
+
+    <!-- 오전 섹션 -->
+    <div class="flex items-center gap-[8px] py-[12px]">
+      <span class="font-body text-[12px] font-bold text-outline uppercase tracking-wider">오전</span>
+      <div class="flex-1 h-px bg-outline-variant"></div>
+    </div>
+
+    <!-- 기록 카드 1 -->
+    <div class="record-card mb-[10px]" role="button" aria-label="분유 120ml, 오전 10시 30분, 엄마 기록, 메모 있음">
+      <div class="flex items-center gap-[12px]">
+        <div class="w-[40px] h-[40px] rounded-full bg-secondary-container flex items-center justify-center flex-shrink-0">
+          <span class="material-symbols-outlined text-primary-container" style="font-size: 20px;">baby_changing_station</span>
+        </div>
+        <div class="flex-1">
+          <div class="flex items-center justify-between">
+            <span class="font-body text-[15px] font-bold text-on-surface">분유 120ml</span>
+            <span class="font-body text-[13px] font-medium text-outline">10:30</span>
+          </div>
+          <div class="flex items-center gap-[8px] mt-[2px]">
+            <span class="font-body text-[12px] font-medium text-on-surface-variant">엄마</span>
+            <span class="font-body text-[12px] font-medium text-outline">· 메모 있음</span>
+          </div>
+        </div>
+        <span class="material-symbols-outlined text-outline-variant" style="font-size: 18px;">chevron_right</span>
+      </div>
+    </div>
+
+    <!-- 기록 카드 2 -->
+    <div class="record-card mb-[10px]" role="button" aria-label="수면 시작, 오전 9시, 아빠 기록">
+      <div class="flex items-center gap-[12px]">
+        <div class="w-[40px] h-[40px] rounded-full bg-secondary-container flex items-center justify-center flex-shrink-0">
+          <span class="material-symbols-outlined text-primary-container" style="font-size: 20px;">dark_mode</span>
+        </div>
+        <div class="flex-1">
+          <div class="flex items-center justify-between">
+            <span class="font-body text-[15px] font-bold text-on-surface">수면 시작</span>
+            <span class="font-body text-[13px] font-medium text-outline">09:00</span>
+          </div>
+          <div class="flex items-center gap-[8px] mt-[2px]">
+            <span class="font-body text-[12px] font-medium text-on-surface-variant">아빠</span>
+          </div>
+        </div>
+        <span class="material-symbols-outlined text-outline-variant" style="font-size: 18px;">chevron_right</span>
+      </div>
+    </div>
+
+    <!-- 새벽 섹션 -->
+    <div class="flex items-center gap-[8px] py-[12px]">
+      <span class="font-body text-[12px] font-bold text-outline uppercase tracking-wider">새벽</span>
+      <div class="flex-1 h-px bg-outline-variant"></div>
+    </div>
+
+    <!-- 기록 카드 3 -->
+    <div class="record-card mb-[10px]" role="button" aria-label="기저귀 소변, 새벽 3시 15분, 엄마 기록">
+      <div class="flex items-center gap-[12px]">
+        <div class="w-[40px] h-[40px] rounded-full bg-secondary-container flex items-center justify-center flex-shrink-0">
+          <span class="material-symbols-outlined text-primary-container" style="font-size: 20px;">water_drop</span>
+        </div>
+        <div class="flex-1">
+          <div class="flex items-center justify-between">
+            <span class="font-body text-[15px] font-bold text-on-surface">기저귀 소변</span>
+            <span class="font-body text-[13px] font-medium text-outline">03:15</span>
+          </div>
+          <div class="flex items-center gap-[8px] mt-[2px]">
+            <span class="font-body text-[12px] font-medium text-on-surface-variant">엄마</span>
+          </div>
+        </div>
+        <span class="material-symbols-outlined text-outline-variant" style="font-size: 18px;">chevron_right</span>
+      </div>
+    </div>
+
+    <!-- 기록 카드 4 -->
+    <div class="record-card mb-[10px]" role="button" aria-label="모유 수유 15분, 새벽 2시, 엄마 기록">
+      <div class="flex items-center gap-[12px]">
+        <div class="w-[40px] h-[40px] rounded-full bg-secondary-container flex items-center justify-center flex-shrink-0">
+          <span class="material-symbols-outlined text-primary-container" style="font-size: 20px;">breastfeeding</span>
+        </div>
+        <div class="flex-1">
+          <div class="flex items-center justify-between">
+            <span class="font-body text-[15px] font-bold text-on-surface">모유 수유 15분</span>
+            <span class="font-body text-[13px] font-medium text-outline">02:00</span>
+          </div>
+          <div class="flex items-center gap-[8px] mt-[2px]">
+            <span class="font-body text-[12px] font-medium text-on-surface-variant">엄마</span>
+          </div>
+        </div>
+        <span class="material-symbols-outlined text-outline-variant" style="font-size: 18px;">chevron_right</span>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- FAB -->
+  <div class="fab" aria-label="기록 추가">
+    <span class="material-symbols-outlined text-white" style="font-size: 32px;">add</span>
+  </div>
+
+  <!-- Bottom Navigation -->
+  <nav class="bottom-nav">
+    <div class="nav-item">
+      <div class="nav-pill nav-pill-active">
+        <span class="material-symbols-outlined filled text-primary-container" style="font-size: 24px;">home</span>
+      </div>
+      <span class="font-body text-[11px] font-bold text-primary-container">홈</span>
+    </div>
+    <div class="nav-item">
+      <div class="nav-pill">
+        <span class="material-symbols-outlined text-on-surface-variant" style="font-size: 24px;">monitoring</span>
+      </div>
+      <span class="font-body text-[11px] font-medium text-on-surface-variant">지표</span>
+    </div>
+    <div class="nav-item">
+      <div class="nav-pill">
+        <span class="material-symbols-outlined text-on-surface-variant" style="font-size: 24px;">photo_library</span>
+      </div>
+      <span class="font-body text-[11px] font-medium text-on-surface-variant">앨범</span>
+    </div>
+    <div class="nav-item">
+      <div class="nav-pill">
+        <span class="material-symbols-outlined text-on-surface-variant" style="font-size: 24px;">settings</span>
+      </div>
+      <span class="font-body text-[11px] font-medium text-on-surface-variant">설정</span>
+    </div>
+  </nav>
+
+
+<!-- 🚨 [임시] 화면 이동 마스터 메뉴 시작 -->
+<div style="position:absolute;bottom:12px;left:12px;z-index:9999;">
+<select onchange="if(this.value)window.location.href=this.value" style="font-size:11px;padding:5px 7px;border-radius:8px;border:1px solid #d3c3bc;background:#f0edeb;color:#4f443f;font-family:'Quicksand',sans-serif;font-weight:600;box-shadow:0 4px 12px rgba(117,88,73,0.15);max-width:150px;cursor:pointer;opacity:0.85;">
+<option value="">📱 화면 이동</option>
+<option value="index.html">01-A 스플래시</option>
+<option value="01-B-force-update.html">01-B 강제 업데이트</option>
+<option value="01-C-server-maintenance.html">01-C 서버 점검</option>
+<option value="02-A-auth-login.html">02-A 로그인</option>
+<option value="03-A-auth-terms-agree.html">03-A 약관 동의</option>
+<option value="04-A-auth-terms-reagree.html">04-A 약관 재동의</option>
+<option value="05-A-server-notice-blocking.html">05-A 공지 (블로킹)</option>
+<option value="05-B-server-notice-popup.html">05-B 공지 (팝업)</option>
+<option value="06-A-onboarding-entry.html">06-A 온보딩 진입</option>
+<option value="06-B-onboarding-invite-input.html">06-B 초대코드 입력</option>
+<option value="06-C-onboarding-invite-confirm.html">06-C 초대 확인</option>
+<option value="07-A-onboarding-baby-profile.html">07-A 아이 프로필</option>
+<option value="09-A-home-record-timeline.html">09-A 기록 타임라인</option>
+<option value="10-A-record-input-fab-select.html">10-A FAB 선택</option>
+<option value="10-B-record-input-breast.html">10-B 모유 입력</option>
+<option value="10-C-record-input-formula.html">10-C 분유 입력</option>
+<option value="11-A-record-input-sleep.html">11-A 수면 입력</option>
+<option value="11-B-record-input-diaper.html">11-B 기저귀 입력</option>
+<option value="12-A-record-detail.html">12-A 기록 상세</option>
+<option value="13-A-record-search.html">13-A 기록 검색</option>
+<option value="14-A-todo-list.html">14-A 할일 목록</option>
+<option value="15-A-todo-notice-detail.html">15-A 할일 상세</option>
+<option value="16-A-metrics-charts.html">16-A 지표 차트</option>
+<option value="17-A-settings-home.html">17-A 설정 홈</option>
+</select>
+</div>
+<!-- 🚨 [임시] 화면 이동 마스터 메뉴 끝 -->
+</div>
+</body></html>

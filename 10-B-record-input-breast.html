@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ko"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>10-B Breast Feeding Input</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script>
+tailwind.config = {
+  theme: { extend: {
+    colors: {
+      "surface": "#fcf9f7", "surface-container": "#f0edeb", "surface-container-low": "#f6f3f1",
+      "on-surface": "#1b1c1b", "on-surface-variant": "#4f443f",
+      "outline": "#82746e", "outline-variant": "#d3c3bc",
+      "primary": "#5b4133", "primary-container": "#755849",
+      "secondary-container": "#ffd8c4"
+    },
+    fontFamily: { "headline": ["Plus Jakarta Sans","sans-serif"], "body": ["Quicksand","sans-serif"] }
+  }}
+}
+</script>
+<style>
+  body { -webkit-font-smoothing: antialiased; }
+  .app-container { width: 390px; height: 844px; margin: 0 auto; background: #ffffff; position: relative; overflow-y: auto; overflow-x: hidden; box-shadow: 0 0 0 1px rgba(0,0,0,0.05); }
+  .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+  .input-field { background: #f0edeb; border: none; border-radius: 16px; height: 52px; padding: 0 16px; width: 100%; font-family: 'Quicksand',sans-serif; font-size: 16px; font-weight: 500; color: #1b1c1b; outline: none; }
+  .input-field:focus { box-shadow: 0 0 0 2px #755849; }
+  .input-field::placeholder { color: #82746e; }
+  .textarea-field { background: #f0edeb; border: none; border-radius: 16px; padding: 16px; width: 100%; min-height: 80px; resize: none; font-family: 'Quicksand',sans-serif; font-size: 16px; font-weight: 500; color: #1b1c1b; outline: none; }
+  .textarea-field:focus { box-shadow: 0 0 0 2px #755849; }
+  .textarea-field::placeholder { color: #82746e; }
+  .cta-gradient { background: linear-gradient(135deg, #755849 0%, #5b4133 100%); box-shadow: 0 8px 30px rgba(117,88,73,0.15); }
+  .gender-chip { height: 44px; border-radius: 9999px; padding: 0 20px; display: inline-flex; align-items: center; justify-content: center; font-family: 'Quicksand',sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.15s; background: #f6f3f1; border: 1px solid #d3c3bc; color: #4f443f; }
+  .gender-chip.selected { background: #ffd8c4; border-color: #755849; color: #5b4133; }
+  .stepper-btn { width: 44px; height: 44px; border-radius: 9999px; background: #f0edeb; border: 1px solid #d3c3bc; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.1s; }
+  .stepper-btn:active { background: #ffd8c4; }
+  .mode-toggle { height: 36px; border-radius: 9999px; padding: 0 14px; font-family: 'Quicksand',sans-serif; font-size: 13px; font-weight: 600; cursor: pointer; border: 1px solid #d3c3bc; }
+  .mode-active { background: #ffd8c4; border-color: #755849; color: #5b4133; }
+  .mode-inactive { background: #f6f3f1; color: #82746e; }
+
+  /* 모바일: 뷰포트 꽉 채움 (앱 느낌) */
+  @media (max-width: 430px) {
+    .app-container {
+      width: 100% !important;
+      height: 100dvh !important;
+      border-radius: 0 !important;
+      box-shadow: none !important;
+    }
+    body {
+      background: #fcf9f7 !important;
+    }
+  }
+</style>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+<div class="app-container flex flex-col">
+
+  <!-- App Bar -->
+  <header class="flex items-center justify-between px-[16px] pt-[52px] pb-[12px] flex-shrink-0 border-b border-outline-variant">
+    <button class="w-[48px] h-[48px] flex items-center justify-center" aria-label="닫기">
+      <span class="material-symbols-outlined text-on-surface" style="font-size: 24px;">close</span>
+    </button>
+    <span class="font-headline text-[16px] font-semibold text-on-surface">모유 기록</span>
+    <button class="font-body text-[15px] font-bold text-primary-container px-[12px] h-[40px]" aria-label="저장">저장</button>
+  </header>
+
+  <!-- Content -->
+  <main class="flex-1 overflow-y-auto px-[24px] py-[24px]">
+
+    <!-- 입력 모드 토글 -->
+    <div class="flex items-center gap-[8px] mb-[24px]">
+      <div class="mode-toggle mode-inactive flex items-center gap-[4px]">
+        <span class="material-symbols-outlined" style="font-size: 16px;">timer</span>
+        타이머
+      </div>
+      <div class="mode-toggle mode-active flex items-center gap-[4px]">
+        <span class="material-symbols-outlined" style="font-size: 16px;">edit</span>
+        수동
+      </div>
+    </div>
+
+    <!-- 수동 입력: 수유 시간 stepper -->
+    <label class="font-body text-[13px] font-bold text-on-surface-variant mb-[8px] block">수유 시간 <span class="text-[#ba1a1a]">*</span></label>
+    <div class="flex items-center justify-center gap-[16px] mb-[28px]">
+      <div class="stepper-btn" aria-label="1분 감소">
+        <span class="material-symbols-outlined text-on-surface-variant" style="font-size: 22px;">remove</span>
+      </div>
+      <span class="font-headline text-[48px] font-bold text-on-surface">15</span>
+      <span class="font-body text-[18px] font-medium text-on-surface-variant">분</span>
+      <div class="stepper-btn" aria-label="1분 증가">
+        <span class="material-symbols-outlined text-on-surface-variant" style="font-size: 22px;">add</span>
+      </div>
+    </div>
+
+    <!-- 방향 선택 -->
+    <label class="font-body text-[13px] font-bold text-on-surface-variant mb-[8px] block">방향 <span class="text-[#ba1a1a]">*</span></label>
+    <div class="flex gap-[10px] mb-[24px]">
+      <div class="gender-chip" role="radio" aria-checked="false">왼쪽</div>
+      <div class="gender-chip" role="radio" aria-checked="false">오른쪽</div>
+      <div class="gender-chip selected" role="radio" aria-checked="true">양쪽</div>
+    </div>
+
+    <!-- 시간 -->
+    <label class="font-body text-[13px] font-bold text-on-surface-variant mb-[8px] block">시간</label>
+    <div class="relative mb-[24px]">
+      <input type="text" class="input-field pr-[48px]" value="2025-06-30  10:30" readonly aria-label="기록 시간"/>
+      <span class="material-symbols-outlined absolute right-[16px] top-1/2 -translate-y-1/2 text-outline" style="font-size: 20px;">schedule</span>
+    </div>
+
+    <!-- 메모 -->
+    <label class="font-body text-[13px] font-bold text-on-surface-variant mb-[8px] block">메모 (선택)</label>
+    <textarea class="textarea-field mb-[24px]" placeholder="메모를 입력하세요" aria-label="메모, 선택" maxlength="200"></textarea>
+
+    <!-- 저장 CTA -->
+    <button class="w-full h-[56px] rounded-full cta-gradient text-white font-body text-[16px] font-semibold flex items-center justify-center transition-opacity active:opacity-80"
+            aria-label="저장하기">
+      저장하기
+    </button>
+  </main>
+
+
+<!-- 🚨 [임시] 화면 이동 마스터 메뉴 시작 -->
+<div style="position:absolute;bottom:12px;left:12px;z-index:9999;">
+<select onchange="if(this.value)window.location.href=this.value" style="font-size:11px;padding:5px 7px;border-radius:8px;border:1px solid #d3c3bc;background:#f0edeb;color:#4f443f;font-family:'Quicksand',sans-serif;font-weight:600;box-shadow:0 4px 12px rgba(117,88,73,0.15);max-width:150px;cursor:pointer;opacity:0.85;">
+<option value="">📱 화면 이동</option>
+<option value="index.html">01-A 스플래시</option>
+<option value="01-B-force-update.html">01-B 강제 업데이트</option>
+<option value="01-C-server-maintenance.html">01-C 서버 점검</option>
+<option value="02-A-auth-login.html">02-A 로그인</option>
+<option value="03-A-auth-terms-agree.html">03-A 약관 동의</option>
+<option value="04-A-auth-terms-reagree.html">04-A 약관 재동의</option>
+<option value="05-A-server-notice-blocking.html">05-A 공지 (블로킹)</option>
+<option value="05-B-server-notice-popup.html">05-B 공지 (팝업)</option>
+<option value="06-A-onboarding-entry.html">06-A 온보딩 진입</option>
+<option value="06-B-onboarding-invite-input.html">06-B 초대코드 입력</option>
+<option value="06-C-onboarding-invite-confirm.html">06-C 초대 확인</option>
+<option value="07-A-onboarding-baby-profile.html">07-A 아이 프로필</option>
+<option value="09-A-home-record-timeline.html">09-A 기록 타임라인</option>
+<option value="10-A-record-input-fab-select.html">10-A FAB 선택</option>
+<option value="10-B-record-input-breast.html">10-B 모유 입력</option>
+<option value="10-C-record-input-formula.html">10-C 분유 입력</option>
+<option value="11-A-record-input-sleep.html">11-A 수면 입력</option>
+<option value="11-B-record-input-diaper.html">11-B 기저귀 입력</option>
+<option value="12-A-record-detail.html">12-A 기록 상세</option>
+<option value="13-A-record-search.html">13-A 기록 검색</option>
+<option value="14-A-todo-list.html">14-A 할일 목록</option>
+<option value="15-A-todo-notice-detail.html">15-A 할일 상세</option>
+<option value="16-A-metrics-charts.html">16-A 지표 차트</option>
+<option value="17-A-settings-home.html">17-A 설정 홈</option>
+</select>
+</div>
+<!-- 🚨 [임시] 화면 이동 마스터 메뉴 끝 -->
+</div>
+</body></html>

@@ -2,7 +2,7 @@
 <html lang="ko"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>01-A Splash Loading</title>
+<title>02-A Auth Login</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
@@ -67,22 +67,57 @@ tailwind.config = {
     position: relative;
     overflow: hidden;
     box-shadow: 0 0 0 1px rgba(0,0,0,0.05);
+    background: linear-gradient(135deg, #fff5eb, #ffecd2);
   }
   .material-symbols-outlined {
     font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
   }
-  @keyframes spin {
-    to { transform: rotate(360deg); }
+  .social-btn {
+    height: 56px;
+    border-radius: 9999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    transition: opacity 0.15s, transform 0.1s;
+    cursor: pointer;
+    border: none;
+    width: 100%;
   }
-  .spinner {
-    animation: spin 1.2s linear infinite;
+  .social-btn:active {
+    opacity: 0.85;
+    transform: scale(0.98);
   }
-  @keyframes pulse-opacity {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.6; }
+  .social-btn-kakao {
+    background-color: #FEE500;
+    color: #191919;
   }
-  .pulse-text {
-    animation: pulse-opacity 2s ease-in-out infinite;
+  .social-btn-naver {
+    background-color: #03C75A;
+    color: #ffffff;
+  }
+  .social-btn-google {
+    background-color: #ffffff;
+    color: #1c1b1b;
+    box-shadow: 0 2px 8px rgba(117, 88, 73, 0.08);
+  }
+  .social-btn-apple {
+    background-color: #1c1b1b;
+    color: #ffffff;
+  }
+  /* 소셜 로고 SVG 인라인 대체 - 텍스트 아이콘 */
+  .social-logo {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 14px;
+    border-radius: 6px;
   }
 
   /* 모바일: 뷰포트 꽉 채움 (앱 느낌) */
@@ -100,32 +135,61 @@ tailwind.config = {
 </style>
 </head>
 <body class="bg-gray-100 flex items-center justify-center min-h-screen">
-<div class="app-container flex flex-col items-center justify-center" style="background: linear-gradient(135deg, #fff5eb, #ffecd2);">
+<div class="app-container flex flex-col">
 
-  <!-- 앱 로고 영역 -->
-  <div class="flex flex-col items-center">
-    <!-- 로고 플레이스홀더 (96px 원) -->
+  <!-- Top Safe Area -->
+  <div class="h-[56px] flex-shrink-0"></div>
+
+  <!-- 상단 콘텐츠: 로고 + 태그라인 -->
+  <div class="flex-1 flex flex-col items-center justify-center px-[24px]">
+    <!-- 로고 플레이스홀더 (96px) -->
     <div class="w-[96px] h-[96px] rounded-full bg-white/80 flex items-center justify-center mb-3" style="box-shadow: 0 4px 20px rgba(117, 88, 73, 0.08);">
       <span class="material-symbols-outlined text-primary-container" style="font-size: 48px;">child_care</span>
     </div>
     <!-- 앱 이름 -->
-    <p class="font-headline text-[18px] font-semibold text-primary-container tracking-tight">Nurture & Bloom</p>
+    <p class="font-headline text-[18px] font-semibold text-primary-container tracking-tight mb-[8px]">Nurture & Bloom</p>
+    <!-- 태그라인 -->
+    <p class="font-body text-[16px] font-medium text-on-surface-variant text-center">아이의 하루를 함께 기록해요</p>
   </div>
 
-  <!-- 로딩 인디케이터 -->
-  <div class="flex flex-col items-center mt-12">
-    <!-- Spinner -->
-    <svg class="spinner w-[32px] h-[32px] text-primary-container" viewBox="0 0 24 24" fill="none">
-      <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="50 20" opacity="0.3"/>
-      <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="20 50"/>
-    </svg>
-    <!-- 상태 텍스트 -->
-    <p class="font-body text-[14px] font-medium text-on-surface-variant mt-4 pulse-text">앱 상태 확인 중...</p>
-  </div>
+  <!-- 소셜 로그인 버튼 영역 -->
+  <div class="px-[24px] pb-[60px] flex flex-col gap-[12px]">
 
-  <!-- 버전 정보 (하단 고정) -->
-  <div class="absolute bottom-[40px] left-0 right-0 flex justify-center">
-    <p class="font-body text-[12px] font-medium text-outline">v1.0.0 (build 100)</p>
+    <!-- 카카오 -->
+    <button class="social-btn social-btn-kakao" aria-label="카카오 계정으로 로그인">
+      <div class="social-logo" style="background: #191919; color: #FEE500; border-radius: 6px;">K</div>
+      카카오로 계속하기
+    </button>
+
+    <!-- 네이버 -->
+    <button class="social-btn social-btn-naver" aria-label="네이버 계정으로 로그인">
+      <div class="social-logo" style="background: #ffffff; color: #03C75A; border-radius: 6px;">N</div>
+      네이버로 계속하기
+    </button>
+
+    <!-- Google -->
+    <button class="social-btn social-btn-google" aria-label="Google 계정으로 로그인">
+      <div class="social-logo" style="background: transparent;">
+        <svg width="20" height="20" viewBox="0 0 24 24">
+          <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+          <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+          <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+          <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+        </svg>
+      </div>
+      Google로 계속하기
+    </button>
+
+    <!-- Apple -->
+    <button class="social-btn social-btn-apple" aria-label="Apple 계정으로 로그인">
+      <div class="social-logo" style="background: transparent;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="#ffffff">
+          <path d="M17.05 20.28c-.98.95-2.05.88-3.08.4-1.09-.5-2.08-.48-3.24 0-1.44.62-2.2.44-3.06-.4C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.53 4.09zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/>
+        </svg>
+      </div>
+      Apple로 계속하기
+    </button>
+
   </div>
 
 

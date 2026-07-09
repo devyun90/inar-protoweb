@@ -2,7 +2,7 @@
 <html lang="ko"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>17-A Settings Home</title>
+<title>23-A Settings Notification</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
@@ -15,7 +15,9 @@ tailwind.config = {
       "on-surface": "#1b1c1b", "on-surface-variant": "#4f443f",
       "outline": "#82746e", "outline-variant": "#d3c3bc",
       "primary": "#5b4133", "primary-container": "#755849",
-      "secondary-container": "#ffd8c4"
+      "on-primary": "#ffffff",
+      "secondary-container": "#ffd8c4",
+      "error": "#ba1a1a", "error-container": "#ffdad6"
     },
     fontFamily: { "headline": ["Plus Jakarta Sans","sans-serif"], "body": ["Quicksand","sans-serif"] }
   }}
@@ -27,15 +29,18 @@ tailwind.config = {
   .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
   .material-symbols-outlined.filled { font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
   .soft-card { background-color: #f0edeb; border: 1px solid #d3c3bc; box-shadow: 0 4px 20px rgba(117,88,73,0.06); border-radius: 20px; }
-  .menu-item { display: flex; align-items: center; padding: 16px; gap: 14px; cursor: pointer; transition: background 0.1s; }
-  .menu-item:active { background: rgba(117,88,73,0.04); }
+  .toggle-track { width: 52px; height: 32px; border-radius: 9999px; position: relative; cursor: pointer; transition: background 0.2s; }
+  .toggle-track.on { background: #755849; }
+  .toggle-track.off { background: #d3c3bc; }
+  .toggle-thumb { width: 24px; height: 24px; border-radius: 9999px; background: #ffffff; position: absolute; top: 4px; transition: left 0.2s; box-shadow: 0 2px 6px rgba(0,0,0,0.15); }
+  .toggle-track.on .toggle-thumb { left: 24px; }
+  .toggle-track.off .toggle-thumb { left: 4px; }
   .menu-divider { height: 1px; background: #d3c3bc; margin: 0 16px; }
   .bottom-nav { height: 80px; background: #ffffff; border-radius: 20px 20px 0 0; box-shadow: 0 -4px 20px rgba(117,88,73,0.06); display: flex; align-items: center; justify-content: space-around; flex-shrink: 0; }
   .nav-item { display: flex; flex-direction: column; align-items: center; gap: 4px; cursor: pointer; }
   .nav-pill { padding: 4px 16px; border-radius: 9999px; }
   .nav-pill-active { background: #ffd8c4; }
 
-  /* 모바일: 뷰포트 꽉 채움 (앱 느낌) */
   @media (max-width: 430px) {
     .app-container {
       width: 100% !important;
@@ -53,102 +58,105 @@ tailwind.config = {
 <div class="app-container">
 
   <!-- Top App Bar -->
-  <header class="px-[24px] pt-[52px] pb-[4px] flex-shrink-0">
-    <h1 class="font-headline text-[22px] font-bold text-on-surface">설정</h1>
+  <header class="flex items-center px-[24px] h-[56px] flex-shrink-0 bg-surface">
+    <button class="w-[40px] h-[40px] flex items-center justify-center -ml-2">
+      <span class="material-symbols-outlined text-on-surface" style="font-size:24px;">arrow_back</span>
+    </button>
+    <h1 class="font-headline text-[18px] font-bold text-on-surface flex-1 ml-[4px]">알림 설정</h1>
   </header>
 
   <!-- Content -->
   <main class="flex-1 overflow-y-auto px-[24px] py-[16px]">
 
-    <!-- 프로필 카드 -->
+    <!-- 마스터 스위치 -->
     <div class="soft-card p-[20px] mb-[24px]">
-      <div class="flex items-center gap-[14px]">
-        <div class="w-[52px] h-[52px] rounded-full bg-secondary-container flex items-center justify-center flex-shrink-0">
-          <span class="font-headline text-[18px] font-bold text-primary-container">김</span>
-        </div>
-        <div class="flex-1">
-          <span class="font-body text-[16px] font-bold text-on-surface block">김하은 보호자</span>
-          <span class="font-body text-[13px] font-medium text-on-surface-variant block mt-[2px]">parent@email.com</span>
-          <span class="inline-flex items-center px-[10px] py-[2px] rounded-full bg-secondary-container font-body text-[11px] font-bold text-primary-container mt-[6px]">주양육자</span>
-        </div>
+      <div class="flex items-center justify-between">
+        <span class="font-body text-[16px] font-bold text-on-surface">알림 전체</span>
+        <div class="toggle-track on"><div class="toggle-thumb"></div></div>
       </div>
     </div>
 
-    <!-- 섹션: 관리 -->
-    <span class="font-body text-[12px] font-bold text-outline uppercase tracking-wider mb-[8px] block">관리</span>
+    <!-- 섹션: 알림 종류 -->
+    <span class="font-body text-[12px] font-bold text-outline uppercase tracking-wider mb-[8px] block">알림 종류</span>
     <div class="soft-card mb-[24px]">
-      <div class="menu-item" role="button" aria-label="아이 관리">
-        <span class="material-symbols-outlined text-on-surface-variant" style="font-size: 22px;">child_care</span>
-        <span class="font-body text-[15px] font-medium text-on-surface flex-1">아이 관리</span>
-        <span class="material-symbols-outlined text-outline-variant" style="font-size: 18px;">chevron_right</span>
+      <!-- 수유 간격 알림 -->
+      <div class="flex items-center p-[16px] gap-[12px]">
+        <span class="font-body text-[15px] font-medium text-on-surface flex-1">수유 간격 알림</span>
+        <div class="toggle-track on"><div class="toggle-thumb"></div></div>
+      </div>
+      <!-- 수유 간격 서브행 -->
+      <div class="flex items-center px-[16px] pb-[16px] pl-[32px] gap-[12px]">
+        <span class="font-body text-[13px] font-medium text-on-surface-variant flex-1">간격</span>
+        <button class="flex items-center gap-[4px]">
+          <span class="font-body text-[14px] font-bold text-primary">2시간 30분</span>
+          <span class="material-symbols-outlined text-outline-variant" style="font-size:16px;">chevron_right</span>
+        </button>
       </div>
       <div class="menu-divider"></div>
-      <div class="menu-item" role="button" aria-label="구성원·초대 관리">
-        <span class="material-symbols-outlined text-on-surface-variant" style="font-size: 22px;">group</span>
-        <span class="font-body text-[15px] font-medium text-on-surface flex-1">구성원·초대 관리</span>
-        <span class="material-symbols-outlined text-outline-variant" style="font-size: 18px;">chevron_right</span>
+      <!-- 예방접종 -->
+      <div class="flex items-center p-[16px] gap-[12px]">
+        <span class="font-body text-[15px] font-medium text-on-surface flex-1">예방접종 D-day</span>
+        <div class="toggle-track on"><div class="toggle-thumb"></div></div>
       </div>
       <div class="menu-divider"></div>
-      <div class="menu-item" role="button" aria-label="홈 관리">
-        <span class="material-symbols-outlined text-on-surface-variant" style="font-size: 22px;">home</span>
-        <span class="font-body text-[15px] font-medium text-on-surface flex-1">홈 관리</span>
-        <span class="material-symbols-outlined text-outline-variant" style="font-size: 18px;">chevron_right</span>
+      <!-- TODO 마감 -->
+      <div class="flex items-center p-[16px] gap-[12px]">
+        <span class="font-body text-[15px] font-medium text-on-surface flex-1">TODO 마감 알림</span>
+        <div class="toggle-track off"><div class="toggle-thumb"></div></div>
       </div>
       <div class="menu-divider"></div>
-      <div class="menu-item" role="button" aria-label="기기 관리">
-        <span class="material-symbols-outlined text-on-surface-variant" style="font-size: 22px;">router</span>
-        <span class="font-body text-[15px] font-medium text-on-surface flex-1">기기 관리</span>
-        <span class="material-symbols-outlined text-outline-variant" style="font-size: 18px;">chevron_right</span>
-      </div>
-      <div class="menu-divider"></div>
-      <div class="menu-item" role="button" aria-label="분유·젖병 설정">
-        <span class="material-symbols-outlined text-on-surface-variant" style="font-size: 22px;">baby_changing_station</span>
-        <span class="font-body text-[15px] font-medium text-on-surface flex-1">분유·젖병 설정</span>
-        <span class="material-symbols-outlined text-outline-variant" style="font-size: 18px;">chevron_right</span>
+      <!-- 기기 출수 완료 -->
+      <div class="flex items-center p-[16px] gap-[12px]">
+        <span class="font-body text-[15px] font-medium text-on-surface flex-1">기기 출수 완료</span>
+        <div class="toggle-track on"><div class="toggle-thumb"></div></div>
       </div>
     </div>
 
-    <!-- 섹션: 앱 설정 -->
-    <span class="font-body text-[12px] font-bold text-outline uppercase tracking-wider mb-[8px] block">앱 설정</span>
-    <div class="soft-card mb-[24px]">
-      <div class="menu-item" role="button" aria-label="알림 설정">
-        <span class="material-symbols-outlined text-on-surface-variant" style="font-size: 22px;">notifications</span>
-        <span class="font-body text-[15px] font-medium text-on-surface flex-1">알림 설정</span>
-        <span class="material-symbols-outlined text-outline-variant" style="font-size: 18px;">chevron_right</span>
+    <!-- 섹션: 방해 금지 -->
+    <span class="font-body text-[12px] font-bold text-outline uppercase tracking-wider mb-[8px] block">방해 금지</span>
+    <div class="soft-card mb-[12px]">
+      <!-- 야간 방해금지 -->
+      <div class="flex items-center p-[16px] gap-[12px]">
+        <span class="font-body text-[15px] font-medium text-on-surface flex-1">야간 방해금지</span>
+        <div class="toggle-track on"><div class="toggle-thumb"></div></div>
       </div>
-      <div class="menu-divider"></div>
-      <div class="menu-item" role="button" aria-label="계정·회원 탈퇴">
-        <span class="material-symbols-outlined text-on-surface-variant" style="font-size: 22px;">manage_accounts</span>
-        <span class="font-body text-[15px] font-medium text-on-surface flex-1">계정·회원 탈퇴</span>
-        <span class="material-symbols-outlined text-outline-variant" style="font-size: 18px;">chevron_right</span>
+      <!-- 시간대 서브행 -->
+      <div class="flex items-center px-[16px] pb-[16px] pl-[32px] gap-[12px]">
+        <span class="font-body text-[13px] font-medium text-on-surface-variant flex-1">시간대</span>
+        <button class="flex items-center gap-[4px]">
+          <span class="font-body text-[14px] font-bold text-primary">23:00 ~ 06:30</span>
+          <span class="material-symbols-outlined text-outline-variant" style="font-size:16px;">chevron_right</span>
+        </button>
       </div>
     </div>
 
-    <!-- 앱 버전 -->
-    <p class="font-body text-[12px] font-medium text-outline text-center">앱 버전 1.0.0</p>
+    <!-- 안내 캡션 -->
+    <div class="flex items-start gap-[6px] px-[4px]">
+      <span class="material-symbols-outlined text-outline" style="font-size:16px;">info</span>
+      <span class="font-body text-[12px] font-medium text-outline">방해금지 시간엔 알림이 표시되지 않아요</span>
+    </div>
 
   </main>
 
   <!-- Bottom Navigation -->
   <nav class="bottom-nav">
     <div class="nav-item">
-      <div class="nav-pill"><span class="material-symbols-outlined text-on-surface-variant" style="font-size: 24px;">home</span></div>
+      <div class="nav-pill"><span class="material-symbols-outlined text-on-surface-variant" style="font-size:24px;">home</span></div>
       <span class="font-body text-[11px] font-medium text-on-surface-variant">홈</span>
     </div>
     <div class="nav-item">
-      <div class="nav-pill"><span class="material-symbols-outlined text-on-surface-variant" style="font-size: 24px;">monitoring</span></div>
+      <div class="nav-pill"><span class="material-symbols-outlined text-on-surface-variant" style="font-size:24px;">monitoring</span></div>
       <span class="font-body text-[11px] font-medium text-on-surface-variant">지표</span>
     </div>
     <div class="nav-item">
-      <div class="nav-pill"><span class="material-symbols-outlined text-on-surface-variant" style="font-size: 24px;">photo_library</span></div>
+      <div class="nav-pill"><span class="material-symbols-outlined text-on-surface-variant" style="font-size:24px;">photo_library</span></div>
       <span class="font-body text-[11px] font-medium text-on-surface-variant">앨범</span>
     </div>
     <div class="nav-item">
-      <div class="nav-pill nav-pill-active"><span class="material-symbols-outlined filled text-primary-container" style="font-size: 24px;">settings</span></div>
+      <div class="nav-pill nav-pill-active"><span class="material-symbols-outlined filled text-primary-container" style="font-size:24px;">settings</span></div>
       <span class="font-body text-[11px] font-bold text-primary-container">설정</span>
     </div>
   </nav>
-
 
 <!-- 🚨 [임시] 화면 이동 마스터 메뉴 시작 -->
 <div style="position:absolute;bottom:12px;left:12px;z-index:9999;">

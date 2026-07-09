@@ -2,7 +2,7 @@
 <html lang="ko"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>11-B Diaper Input</title>
+<title>27-A Album Placeholder</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
@@ -11,10 +11,13 @@ tailwind.config = {
   theme: { extend: {
     colors: {
       "surface": "#fcf9f7", "surface-container": "#f0edeb", "surface-container-low": "#f6f3f1",
+      "surface-container-lowest": "#ffffff",
       "on-surface": "#1b1c1b", "on-surface-variant": "#4f443f",
       "outline": "#82746e", "outline-variant": "#d3c3bc",
       "primary": "#5b4133", "primary-container": "#755849",
-      "secondary-container": "#ffd8c4"
+      "on-primary": "#ffffff",
+      "secondary-container": "#ffd8c4",
+      "error": "#ba1a1a"
     },
     fontFamily: { "headline": ["Plus Jakarta Sans","sans-serif"], "body": ["Quicksand","sans-serif"] }
   }}
@@ -22,18 +25,14 @@ tailwind.config = {
 </script>
 <style>
   body { -webkit-font-smoothing: antialiased; }
-  .app-container { width: 390px; height: 844px; margin: 0 auto; background: #ffffff; position: relative; overflow-y: auto; overflow-x: hidden; box-shadow: 0 0 0 1px rgba(0,0,0,0.05); }
+  .app-container { width: 390px; height: 844px; margin: 0 auto; background-color: #fcf9f7; position: relative; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 0 0 1px rgba(0,0,0,0.05); }
   .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
-  .input-field { background: #f0edeb; border: none; border-radius: 16px; height: 52px; padding: 0 16px; width: 100%; font-family: 'Quicksand',sans-serif; font-size: 16px; font-weight: 500; color: #1b1c1b; outline: none; }
-  .input-field:focus { box-shadow: 0 0 0 2px #755849; }
-  .textarea-field { background: #f0edeb; border: none; border-radius: 16px; padding: 16px; width: 100%; min-height: 80px; resize: none; font-family: 'Quicksand',sans-serif; font-size: 16px; font-weight: 500; color: #1b1c1b; outline: none; }
-  .textarea-field:focus { box-shadow: 0 0 0 2px #755849; }
-  .textarea-field::placeholder { color: #82746e; }
-  .cta-gradient { background: linear-gradient(135deg, #755849 0%, #5b4133 100%); box-shadow: 0 8px 30px rgba(117,88,73,0.15); }
-  .choice-chip { height: 44px; border-radius: 9999px; padding: 0 20px; display: inline-flex; align-items: center; justify-content: center; font-family: 'Quicksand',sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.15s; background: #f6f3f1; border: 1px solid #d3c3bc; color: #4f443f; }
-  .choice-chip.selected { background: #ffd8c4; border-color: #755849; color: #5b4133; }
+  .material-symbols-outlined.filled { font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+  .bottom-nav { height: 80px; background: #ffffff; border-radius: 20px 20px 0 0; box-shadow: 0 -4px 20px rgba(117,88,73,0.06); display: flex; align-items: center; justify-content: space-around; flex-shrink: 0; }
+  .nav-item { display: flex; flex-direction: column; align-items: center; gap: 4px; cursor: pointer; }
+  .nav-pill { padding: 4px 16px; border-radius: 9999px; }
+  .nav-pill-active { background: #ffd8c4; }
 
-  /* 모바일: 뷰포트 꽉 채움 (앱 느낌) */
   @media (max-width: 430px) {
     .app-container {
       width: 100% !important;
@@ -48,54 +47,64 @@ tailwind.config = {
 </style>
 </head>
 <body class="bg-gray-100 flex items-center justify-center min-h-screen">
-<div class="app-container flex flex-col">
+<div class="app-container">
 
-  <!-- App Bar -->
-  <header class="flex items-center justify-between px-[16px] pt-[52px] pb-[12px] flex-shrink-0 border-b border-outline-variant">
-    <button class="w-[48px] h-[48px] flex items-center justify-center" aria-label="닫기">
-      <span class="material-symbols-outlined text-on-surface" style="font-size: 24px;">close</span>
-    </button>
-    <span class="font-headline text-[16px] font-semibold text-on-surface">기저귀 기록</span>
-    <button class="font-body text-[15px] font-bold text-primary-container px-[12px] h-[40px]" aria-label="저장">저장</button>
+  <!-- Top App Bar -->
+  <header class="flex items-center justify-between px-[24px] h-[56px] flex-shrink-0 bg-surface">
+    <div class="flex items-center gap-[10px]">
+      <div class="w-[36px] h-[36px] rounded-full bg-secondary-container flex items-center justify-center">
+        <span class="material-symbols-outlined filled" style="font-size:20px; color:#755849;">person</span>
+      </div>
+      <h1 class="font-headline text-[18px] font-bold text-primary">하은</h1>
+    </div>
+    <div class="flex items-center gap-[8px]">
+      <button class="w-[40px] h-[40px] flex items-center justify-center"><span class="material-symbols-outlined text-on-surface" style="font-size:24px;">notifications</span></button>
+      <button class="w-[40px] h-[40px] flex items-center justify-center"><span class="material-symbols-outlined text-on-surface" style="font-size:24px;">calendar_month</span></button>
+      <button class="w-[40px] h-[40px] flex items-center justify-center"><span class="material-symbols-outlined text-on-surface" style="font-size:24px;">more_vert</span></button>
+    </div>
   </header>
 
-  <!-- Content -->
-  <main class="flex-1 overflow-y-auto px-[24px] py-[24px]">
+  <!-- Page Title -->
+  <div class="px-[24px] pt-[4px] pb-[8px] flex-shrink-0">
+    <span class="font-headline text-[22px] font-bold text-on-surface">앨범</span>
+  </div>
 
-    <!-- 유형 선택 -->
-    <label class="font-body text-[13px] font-bold text-on-surface-variant mb-[8px] block">유형 <span class="text-[#ba1a1a]">*</span></label>
-    <div class="flex gap-[10px] mb-[24px]">
-      <div class="choice-chip" role="radio" aria-checked="false">소변</div>
-      <div class="choice-chip selected" role="radio" aria-checked="true">대변</div>
-      <div class="choice-chip" role="radio" aria-checked="false">소변+대변</div>
+  <!-- Content: Placeholder -->
+  <main class="flex-1 overflow-y-auto flex flex-col items-center justify-center px-[24px]">
+
+    <!-- Clock icon in circle -->
+    <div class="w-[96px] h-[96px] rounded-full bg-secondary-container flex items-center justify-center mb-[24px]">
+      <span class="material-symbols-outlined text-primary-container" style="font-size:48px;">schedule</span>
     </div>
 
-    <!-- 대변 상태 (대변 선택 시 노출) -->
-    <label class="font-body text-[13px] font-bold text-on-surface-variant mb-[8px] block">상태 <span class="text-[#ba1a1a]">*</span></label>
-    <div class="flex gap-[10px] mb-[24px]">
-      <div class="choice-chip selected" role="radio" aria-checked="true">정상</div>
-      <div class="choice-chip" role="radio" aria-checked="false">묽음</div>
-      <div class="choice-chip" role="radio" aria-checked="false">단단</div>
-    </div>
+    <!-- Main copy -->
+    <span class="font-headline text-[20px] font-bold text-on-surface text-center mb-[8px]">곧 제공됩니다</span>
+    <span class="font-body text-[15px] font-medium text-on-surface-variant text-center leading-[22px] mb-[20px]">사진과 일기를 모아보는 앨범 기능을<br/>준비하고 있어요.</span>
 
-    <!-- 시간 -->
-    <label class="font-body text-[13px] font-bold text-on-surface-variant mb-[8px] block">시간</label>
-    <div class="relative mb-[24px]">
-      <input type="text" class="input-field pr-[48px]" value="2025-06-30  08:15" readonly aria-label="기록 시간"/>
-      <span class="material-symbols-outlined absolute right-[16px] top-1/2 -translate-y-1/2 text-outline" style="font-size: 20px;">schedule</span>
-    </div>
+    <!-- Phase badge -->
+    <span class="inline-flex items-center px-[14px] py-[6px] rounded-full bg-surface-container border border-outline-variant font-body text-[12px] font-bold text-on-surface-variant">Phase 2 예정</span>
 
-    <!-- 메모 -->
-    <label class="font-body text-[13px] font-bold text-on-surface-variant mb-[8px] block">메모 (선택)</label>
-    <textarea class="textarea-field mb-[24px]" placeholder="메모를 입력하세요" aria-label="메모, 선택" maxlength="200"></textarea>
-
-    <!-- 저장 CTA -->
-    <button class="w-full h-[56px] rounded-full cta-gradient text-white font-body text-[16px] font-semibold flex items-center justify-center transition-opacity active:opacity-80"
-            aria-label="저장하기">
-      저장하기
-    </button>
   </main>
 
+  <!-- Bottom Navigation -->
+  <nav class="bottom-nav">
+    <div class="nav-item">
+      <div class="nav-pill"><span class="material-symbols-outlined text-on-surface-variant" style="font-size:24px;">home</span></div>
+      <span class="font-body text-[11px] font-medium text-on-surface-variant">홈</span>
+    </div>
+    <div class="nav-item">
+      <div class="nav-pill"><span class="material-symbols-outlined text-on-surface-variant" style="font-size:24px;">monitoring</span></div>
+      <span class="font-body text-[11px] font-medium text-on-surface-variant">지표</span>
+    </div>
+    <div class="nav-item">
+      <div class="nav-pill nav-pill-active"><span class="material-symbols-outlined filled text-primary-container" style="font-size:24px;">photo_library</span></div>
+      <span class="font-body text-[11px] font-bold text-primary-container">앨범</span>
+    </div>
+    <div class="nav-item">
+      <div class="nav-pill"><span class="material-symbols-outlined text-on-surface-variant" style="font-size:24px;">settings</span></div>
+      <span class="font-body text-[11px] font-medium text-on-surface-variant">설정</span>
+    </div>
+  </nav>
 
 <!-- 🚨 [임시] 화면 이동 마스터 메뉴 시작 -->
 <div style="position:absolute;bottom:12px;left:12px;z-index:9999;">

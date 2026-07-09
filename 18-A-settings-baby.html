@@ -2,7 +2,7 @@
 <html lang="ko"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>16-A Metrics Charts</title>
+<title>18-A Settings Baby</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
@@ -15,7 +15,9 @@ tailwind.config = {
       "on-surface": "#1b1c1b", "on-surface-variant": "#4f443f",
       "outline": "#82746e", "outline-variant": "#d3c3bc",
       "primary": "#5b4133", "primary-container": "#755849",
-      "secondary-container": "#ffd8c4"
+      "on-primary": "#ffffff",
+      "secondary-container": "#ffd8c4",
+      "error": "#ba1a1a", "error-container": "#ffdad6"
     },
     fontFamily: { "headline": ["Plus Jakarta Sans","sans-serif"], "body": ["Quicksand","sans-serif"] }
   }}
@@ -26,19 +28,13 @@ tailwind.config = {
   .app-container { width: 390px; height: 844px; margin: 0 auto; background-color: #fcf9f7; position: relative; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 0 0 1px rgba(0,0,0,0.05); }
   .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
   .material-symbols-outlined.filled { font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
-  .soft-card { background-color: #f0edeb; border: 1px solid #d3c3bc; box-shadow: 0 4px 20px rgba(117,88,73,0.06); border-radius: 20px; padding: 16px; }
-  .subtab { padding: 8px 14px; border-radius: 9999px; font-family: 'Quicksand',sans-serif; font-size: 13px; font-weight: 600; white-space: nowrap; }
-  .subtab-active { background: #ffd8c4; color: #5b4133; }
-  .subtab-inactive { color: #82746e; }
-  .period-chip { height: 32px; border-radius: 8px; padding: 0 12px; display: inline-flex; align-items: center; font-family: 'Quicksand',sans-serif; font-size: 12px; font-weight: 600; cursor: pointer; }
-  .period-active { background: #755849; color: #ffffff; }
-  .period-inactive { background: #f6f3f1; color: #4f443f; border: 1px solid #d3c3bc; }
+  .soft-card { background-color: #f0edeb; border: 1px solid #d3c3bc; box-shadow: 0 4px 20px rgba(117,88,73,0.06); border-radius: 20px; }
+  .dashed-card { border: 2px dashed #d3c3bc; border-radius: 20px; background: transparent; }
   .bottom-nav { height: 80px; background: #ffffff; border-radius: 20px 20px 0 0; box-shadow: 0 -4px 20px rgba(117,88,73,0.06); display: flex; align-items: center; justify-content: space-around; flex-shrink: 0; }
   .nav-item { display: flex; flex-direction: column; align-items: center; gap: 4px; cursor: pointer; }
   .nav-pill { padding: 4px 16px; border-radius: 9999px; }
   .nav-pill-active { background: #ffd8c4; }
 
-  /* 모바일: 뷰포트 꽉 채움 (앱 느낌) */
   @media (max-width: 430px) {
     .app-container {
       width: 100% !important;
@@ -56,79 +52,58 @@ tailwind.config = {
 <div class="app-container">
 
   <!-- Top App Bar -->
-  <header class="flex items-center justify-between px-[24px] pt-[52px] pb-[4px] flex-shrink-0">
-    <div class="flex items-center gap-[8px]">
-      <span class="font-headline text-[16px] font-bold text-on-surface">하은</span>
-      <span class="material-symbols-outlined text-on-surface-variant" style="font-size: 18px;">expand_more</span>
-    </div>
-    <button class="w-[40px] h-[40px] flex items-center justify-center" aria-label="알림">
-      <span class="material-symbols-outlined text-on-surface-variant" style="font-size: 22px;">notifications</span>
+  <header class="flex items-center px-[24px] h-[56px] flex-shrink-0 bg-surface">
+    <button class="w-[40px] h-[40px] flex items-center justify-center -ml-2">
+      <span class="material-symbols-outlined text-on-surface" style="font-size:24px;">arrow_back</span>
+    </button>
+    <h1 class="font-headline text-[18px] font-bold text-on-surface flex-1 ml-[4px]">아이 관리</h1>
+    <button class="flex items-center gap-[4px] px-[12px] h-[36px] rounded-full bg-secondary-container">
+      <span class="material-symbols-outlined text-primary-container" style="font-size:18px;">add</span>
+      <span class="font-body text-[13px] font-bold text-primary-container">추가</span>
     </button>
   </header>
 
-  <!-- 페이지 타이틀 -->
-  <div class="px-[24px] pt-[8px] pb-[4px] flex-shrink-0">
-    <h1 class="font-headline text-[22px] font-bold text-on-surface">지표</h1>
-  </div>
+  <!-- Content -->
+  <main class="flex-1 overflow-y-auto px-[24px] py-[16px]">
 
-  <!-- 차트 탭 -->
-  <div class="flex items-center gap-[4px] px-[24px] py-[8px] flex-shrink-0 overflow-x-auto" style="scrollbar-width: none;">
-    <div class="subtab subtab-active">성장</div>
-    <div class="subtab subtab-inactive">모유</div>
-    <div class="subtab subtab-inactive">분유</div>
-    <div class="subtab subtab-inactive">수면</div>
-  </div>
-
-  <!-- 기간 필터 -->
-  <div class="flex items-center gap-[6px] px-[24px] py-[6px] flex-shrink-0">
-    <div class="period-chip period-inactive">1주</div>
-    <div class="period-chip period-active">1개월</div>
-    <div class="period-chip period-inactive">3개월</div>
-    <div class="period-chip period-inactive">6개월</div>
-    <div class="period-chip period-inactive">1년</div>
-  </div>
-
-  <!-- 차트 콘텐츠 -->
-  <main class="flex-1 overflow-y-auto px-[24px] py-[12px]">
-
-    <!-- 키 차트 카드 -->
-    <div class="soft-card mb-[16px]">
-      <div class="flex items-center justify-between mb-[12px]">
-        <span class="font-body text-[14px] font-bold text-on-surface">키 (cm)</span>
-        <div class="flex items-center gap-[12px]">
-          <div class="flex items-center gap-[4px]">
-            <div class="w-[8px] h-[8px] rounded-full bg-primary-container"></div>
-            <span class="font-body text-[11px] text-outline">측정</span>
-          </div>
-          <div class="flex items-center gap-[4px]">
-            <div class="w-[12px] h-[2px] border-t-2 border-dashed border-outline"></div>
-            <span class="font-body text-[11px] text-outline">WHO</span>
-          </div>
+    <!-- 섹션: 활성 아이 -->
+    <span class="font-body text-[12px] font-bold text-outline uppercase tracking-wider mb-[8px] block">활성 아이</span>
+    <div class="soft-card p-[20px] mb-[24px]">
+      <div class="flex items-center gap-[14px]">
+        <div class="w-[48px] h-[48px] rounded-full bg-secondary-container flex items-center justify-center flex-shrink-0">
+          <span class="font-headline text-[16px] font-bold text-primary-container">하</span>
         </div>
-      </div>
-      <!-- 차트 영역 -->
-      <div class="h-[160px] bg-surface-container-low rounded-[12px] flex items-end justify-around px-[16px] pb-[24px] pt-[16px] relative">
-        <div class="absolute top-[50px] left-[16px] right-[16px] border-t-2 border-dashed border-outline-variant opacity-40"></div>
-        <div class="absolute left-[8px] top-[46px] font-body text-[9px] text-outline">50p</div>
-        <!-- 시뮬 포인트 -->
-        <div class="flex flex-col items-center"><div class="w-[8px] h-[8px] rounded-full bg-primary-container mb-[50px]"></div><span class="font-body text-[10px] text-outline">3월</span></div>
-        <div class="flex flex-col items-center"><div class="w-[8px] h-[8px] rounded-full bg-primary-container mb-[62px]"></div><span class="font-body text-[10px] text-outline">4월</span></div>
-        <div class="flex flex-col items-center"><div class="w-[8px] h-[8px] rounded-full bg-primary-container mb-[74px]"></div><span class="font-body text-[10px] text-outline">5월</span></div>
-        <div class="flex flex-col items-center"><div class="w-[8px] h-[8px] rounded-full bg-primary-container mb-[86px]"></div><span class="font-body text-[10px] text-outline">6월</span></div>
-        <div class="flex flex-col items-center"><div class="w-[8px] h-[8px] rounded-full bg-primary-container mb-[96px]"></div><span class="font-body text-[10px] text-outline">7월</span></div>
+        <div class="flex-1">
+          <div class="flex items-center gap-[8px]">
+            <span class="font-body text-[16px] font-bold text-on-surface">하은</span>
+            <span class="inline-flex items-center px-[8px] py-[2px] rounded-full bg-[#d4edda] font-body text-[11px] font-bold text-[#2d6a4f]">활성</span>
+          </div>
+          <span class="font-body text-[13px] font-medium text-on-surface-variant block mt-[2px]">여 · 2024.06.01 (생후 7개월)</span>
+        </div>
+        <span class="material-symbols-outlined text-outline-variant" style="font-size:18px;">chevron_right</span>
       </div>
     </div>
 
-    <!-- 요약 카드 -->
-    <div class="soft-card">
-      <span class="font-body text-[13px] font-bold text-on-surface-variant mb-[8px] block">최근 측정 요약</span>
-      <div class="flex items-center justify-between">
-        <span class="font-body text-[14px] font-medium text-on-surface">키 67.2cm · 몸무게 7.8kg</span>
-        <span class="font-body text-[12px] text-outline">6/28 측정</span>
+    <!-- 섹션: 다른 아이 -->
+    <span class="font-body text-[12px] font-bold text-outline uppercase tracking-wider mb-[8px] block">다른 아이</span>
+    <div class="soft-card p-[20px] mb-[16px]">
+      <div class="flex items-center gap-[14px]">
+        <div class="w-[48px] h-[48px] rounded-full bg-secondary-container flex items-center justify-center flex-shrink-0">
+          <span class="font-headline text-[16px] font-bold text-primary-container">도</span>
+        </div>
+        <div class="flex-1">
+          <span class="font-body text-[16px] font-bold text-on-surface block">도윤</span>
+          <span class="font-body text-[13px] font-medium text-on-surface-variant block mt-[2px]">남 · 2022.03.10 (만 3세)</span>
+          <button class="mt-[6px] font-body text-[13px] font-bold text-primary">전환하기</button>
+        </div>
+        <span class="material-symbols-outlined text-outline-variant" style="font-size:18px;">chevron_right</span>
       </div>
-      <div class="mt-[4px]">
-        <span class="font-body text-[12px] text-primary-container font-semibold">WHO 백분위: 키 50p · 몸무게 60p</span>
-      </div>
+    </div>
+
+    <!-- 아이 추가 카드 (ADMIN) -->
+    <div class="dashed-card flex items-center justify-center gap-[8px] h-[64px] cursor-pointer">
+      <span class="material-symbols-outlined text-outline" style="font-size:22px;">add</span>
+      <span class="font-body text-[14px] font-bold text-outline">아이 추가</span>
     </div>
 
   </main>
@@ -136,23 +111,22 @@ tailwind.config = {
   <!-- Bottom Navigation -->
   <nav class="bottom-nav">
     <div class="nav-item">
-      <div class="nav-pill"><span class="material-symbols-outlined text-on-surface-variant" style="font-size: 24px;">home</span></div>
+      <div class="nav-pill"><span class="material-symbols-outlined text-on-surface-variant" style="font-size:24px;">home</span></div>
       <span class="font-body text-[11px] font-medium text-on-surface-variant">홈</span>
     </div>
     <div class="nav-item">
-      <div class="nav-pill nav-pill-active"><span class="material-symbols-outlined filled text-primary-container" style="font-size: 24px;">monitoring</span></div>
-      <span class="font-body text-[11px] font-bold text-primary-container">지표</span>
+      <div class="nav-pill"><span class="material-symbols-outlined text-on-surface-variant" style="font-size:24px;">monitoring</span></div>
+      <span class="font-body text-[11px] font-medium text-on-surface-variant">지표</span>
     </div>
     <div class="nav-item">
-      <div class="nav-pill"><span class="material-symbols-outlined text-on-surface-variant" style="font-size: 24px;">photo_library</span></div>
+      <div class="nav-pill"><span class="material-symbols-outlined text-on-surface-variant" style="font-size:24px;">photo_library</span></div>
       <span class="font-body text-[11px] font-medium text-on-surface-variant">앨범</span>
     </div>
     <div class="nav-item">
-      <div class="nav-pill"><span class="material-symbols-outlined text-on-surface-variant" style="font-size: 24px;">settings</span></div>
-      <span class="font-body text-[11px] font-medium text-on-surface-variant">설정</span>
+      <div class="nav-pill nav-pill-active"><span class="material-symbols-outlined filled text-primary-container" style="font-size:24px;">settings</span></div>
+      <span class="font-body text-[11px] font-bold text-primary-container">설정</span>
     </div>
   </nav>
-
 
 <!-- 🚨 [임시] 화면 이동 마스터 메뉴 시작 -->
 <div style="position:absolute;bottom:12px;left:12px;z-index:9999;">

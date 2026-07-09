@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+
+<html class="light" lang="ko"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Quicksand:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "primary-container": "#755849",
+                    "outline-variant": "#d3c3bc",
+                    "surface-container-lowest": "#ffffff",
+                    "primary-fixed": "#ffdbca",
+                    "primary": "#5b4133",
+                    "tertiary-fixed-dim": "#d6c4ab",
+                    "surface-dim": "#dcd9d8",
+                    "background": "#fcf9f7",
+                    "tertiary-fixed": "#f2e0c6",
+                    "error-container": "#ffdad6",
+                    "inverse-on-surface": "#f3f0ee",
+                    "secondary": "#755849",
+                    "tertiary-container": "#695c48",
+                    "surface-variant": "#e5e2e0",
+                    "on-background": "#1b1c1b",
+                    "on-error": "#ffffff",
+                    "surface-container-highest": "#e5e2e0",
+                    "on-surface": "#1b1c1b",
+                    "on-secondary-container": "#795c4d",
+                    "surface-container": "#f0edeb",
+                    "surface-tint": "#755849",
+                    "on-secondary": "#ffffff",
+                    "on-tertiary-fixed": "#231a0a",
+                    "error": "#ba1a1a",
+                    "on-primary-fixed": "#2b170b",
+                    "on-tertiary-fixed-variant": "#514532",
+                    "secondary-container": "#ffd8c4",
+                    "secondary-fixed": "#ffdbc9",
+                    "on-primary": "#ffffff",
+                    "surface-container-high": "#eae8e6",
+                    "surface": "#fcf9f7",
+                    "on-tertiary-container": "#e8d6bc",
+                    "surface-container-low": "#f6f3f1",
+                    "inverse-surface": "#30302f",
+                    "on-surface-variant": "#4f443f",
+                    "outline": "#82746e",
+                    "on-secondary-fixed": "#2b170b",
+                    "tertiary": "#514532",
+                    "surface-bright": "#fcf9f7",
+                    "primary-fixed-dim": "#e4bfac",
+                    "on-secondary-fixed-variant": "#5b4132",
+                    "secondary-fixed-dim": "#e4bfac",
+                    "on-primary-fixed-variant": "#5b4133",
+                    "on-error-container": "#93000a",
+                    "on-tertiary": "#ffffff",
+                    "on-primary-container": "#f7d0bd",
+                    "inverse-primary": "#e4bfac"
+            },
+            "borderRadius": {
+                    "DEFAULT": "1rem",
+                    "lg": "2rem",
+                    "xl": "3rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "stack-lg": "20px",
+                    "margin-page": "24px",
+                    "gutter": "16px",
+                    "gap-section": "40px",
+                    "base": "8px",
+                    "stack-sm": "4px",
+                    "stack-md": "12px"
+            },
+            "fontFamily": {
+                    "headline-md": ["Plus Jakarta Sans"],
+                    "label-sm": ["Quicksand"],
+                    "label-md": ["Quicksand"],
+                    "display-number": ["Plus Jakarta Sans"],
+                    "body-lg": ["Quicksand"],
+                    "body-md": ["Quicksand"],
+                    "headline-lg-mobile": ["Plus Jakarta Sans"],
+                    "headline-lg": ["Plus Jakarta Sans"]
+            },
+            "fontSize": {
+                    "headline-md": ["22px", {"lineHeight": "28px", "fontWeight": "700"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "600"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "700"}],
+                    "display-number": ["48px", {"lineHeight": "48px", "fontWeight": "700"}],
+                    "body-lg": ["18px", {"lineHeight": "26px", "fontWeight": "500"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "500"}],
+                    "headline-lg-mobile": ["26px", {"lineHeight": "32px", "fontWeight": "700"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #fcf9f7;
+            color: #1b1c1b;
+            -webkit-tap-highlight-color: transparent;
+            min-height: 100dvh;
+        }
+        .soft-card {
+            background-color: #f0edeb;
+            border: 1px solid #d3c3bc;
+            box-shadow: 0 8px 30px rgba(117, 88, 73, 0.08);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .soft-card:active {
+            transform: scale(0.98);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .fab-gradient {
+            background: linear-gradient(135deg, #755849 0%, #5b4133 100%);
+        }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        .tab-indicator {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 2px;
+            background-color: #5b4133;
+            transition: all 0.3s ease;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-body-md text-on-surface selection:bg-secondary-container">
+<!-- Top App Bar -->
+<header class="fixed top-0 left-0 right-0 z-50 bg-surface flex justify-between items-center w-full px-margin-page h-[56px]">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">person</span>
+</div>
+<h1 class="text-headline-md font-headline-md text-primary">하은이</h1>
+</div>
+<div class="flex items-center gap-4">
+<button class="hover:opacity-80 transition-opacity active:scale-95 text-on-surface">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="hover:opacity-80 transition-opacity active:scale-95 text-on-surface">
+<span class="material-symbols-outlined">calendar_month</span>
+</button>
+<button class="hover:opacity-80 transition-opacity active:scale-95 text-on-surface">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</div>
+</header>
+<main class="pt-[56px] pb-[100px] px-margin-page">
+<!-- Sub-tabs -->
+<nav class="flex border-b border-outline-variant/30 sticky top-[56px] bg-surface z-40 mb-6">
+<button class="flex-1 py-3 text-label-md font-bold text-primary border-b-2 border-primary">상태</button>
+<button class="flex-1 py-3 text-label-md font-medium text-on-surface-variant">기록</button>
+<button class="flex-1 py-3 text-label-md font-medium text-on-surface-variant">AI분석</button>
+</nav>
+<!-- Top Alert Card -->
+<div class="soft-card rounded-lg p-4 mb-gap-section flex items-center justify-between border-primary/20">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">event_note</span>
+<span class="text-body-md font-semibold text-on-surface">6/30 정기검진 안내 (D-3)</span>
+</div>
+<span class="material-symbols-outlined text-outline">chevron_right</span>
+</div>
+<!-- 하은이의 오늘 Section -->
+<section class="space-y-stack-lg mb-gap-section">
+<div class="flex justify-between items-center">
+<h3 class="text-headline-md font-headline-md text-primary">하은이의 오늘</h3>
+<span class="px-3 py-1 bg-primary-container text-white text-label-sm rounded-full font-bold">D+180</span>
+</div>
+<div class="grid grid-cols-3 gap-3">
+<div class="soft-card rounded-xl p-3 flex flex-col items-center text-center">
+<span class="material-symbols-outlined text-primary mb-1">breastfeeding</span>
+<span class="text-label-sm font-bold text-primary mb-1">수유</span>
+<p class="text-label-md font-bold text-on-surface">3회</p>
+<p class="text-label-md font-bold text-on-surface">540ml</p>
+<span class="text-[10px] text-on-surface-variant mt-1">+20ml vs 어제</span>
+</div>
+<div class="soft-card rounded-xl p-3 flex flex-col items-center text-center">
+<span class="material-symbols-outlined text-primary mb-1">bedtime</span>
+<span class="text-label-sm font-bold text-primary mb-1">수면</span>
+<p class="text-label-md font-bold text-on-surface">2회</p>
+<p class="text-label-md font-bold text-on-surface">4h 30m</p>
+<span class="text-[10px] text-on-surface-variant mt-1">+30m vs 어제</span>
+</div>
+<div class="soft-card rounded-xl p-3 flex flex-col items-center text-center">
+<span class="material-symbols-outlined text-primary mb-1">water_drop</span>
+<span class="text-label-sm font-bold text-primary mb-1">기저귀</span>
+<p class="text-label-md font-bold text-on-surface">5회</p>
+<p class="text-label-md font-bold text-on-surface">양호</p>
+<span class="text-[10px] text-on-surface-variant mt-1">동일</span>
+</div>
+</div>
+</section>
+<!-- 오늘의 할 일 Section -->
+<section class="space-y-stack-lg mb-gap-section">
+<div class="flex justify-between items-center">
+<h3 class="text-headline-md font-headline-md text-primary">오늘의 할 일</h3>
+<button class="text-label-md font-label-md text-on-surface-variant flex items-center gap-1">
+                    더보기 <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</button>
+</div>
+<div class="space-y-3">
+<div class="soft-card rounded-lg p-4 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-6 h-6 rounded-full border-2 border-outline flex items-center justify-center">
+<span class="material-symbols-outlined text-[16px] text-primary hidden">check</span>
+</div>
+<span class="text-body-md font-medium text-on-surface">유산균 영양제 챙겨주기</span>
+</div>
+<span class="text-label-sm text-on-surface-variant">오전 중</span>
+</div>
+<div class="soft-card rounded-lg p-4 flex items-center justify-between opacity-60">
+<div class="flex items-center gap-3">
+<div class="w-6 h-6 rounded-full bg-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-[16px] text-white">check</span>
+</div>
+<span class="text-body-md font-medium text-on-surface line-through">목욕 시킬 준비 (온도 체크)</span>
+</div>
+<span class="text-label-sm text-on-surface-variant">완료</span>
+</div>
+<div class="soft-card rounded-lg p-4 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-6 h-6 rounded-full border-2 border-outline flex items-center justify-center">
+</div>
+<span class="text-body-md font-medium text-on-surface">오후 4시 수면 교육 진행</span>
+</div>
+<span class="text-label-sm text-on-surface-variant">16:00</span>
+</div>
+</div>
+</section>
+<!-- 최근 기록 Section -->
+<section class="space-y-stack-lg">
+<h3 class="text-headline-md font-headline-md text-primary">최근 기록</h3>
+<div class="relative space-y-6 before:content-[''] before:absolute before:left-[23px] before:top-2 before:bottom-2 before:w-[1px] before:bg-outline-variant/50">
+<!-- Record 1 -->
+<div class="flex gap-4 relative">
+<div class="w-12 h-12 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container z-10 shrink-0">
+<span class="material-symbols-outlined">restaurant</span>
+</div>
+<div class="soft-card rounded-lg p-4 flex-1">
+<div class="flex justify-between items-start mb-1">
+<span class="text-label-md font-bold text-primary">분유 수유</span>
+<span class="text-label-sm text-on-surface-variant">14:15</span>
+</div>
+<p class="text-body-md text-on-surface-variant">압타밀 180ml (남김없이 모두 먹음)</p>
+</div>
+</div>
+<!-- Record 2 -->
+<div class="flex gap-4 relative">
+<div class="w-12 h-12 rounded-full bg-primary-fixed flex items-center justify-center text-on-primary-fixed z-10 shrink-0">
+<span class="material-symbols-outlined">bedtime</span>
+</div>
+<div class="soft-card rounded-lg p-4 flex-1">
+<div class="flex justify-between items-start mb-1">
+<span class="text-label-md font-bold text-primary">낮잠</span>
+<span class="text-label-sm text-on-surface-variant">12:30 - 14:05</span>
+</div>
+<p class="text-body-md text-on-surface-variant">깊은 수면, 중간에 한 번 깸</p>
+</div>
+</div>
+<!-- Record 3 -->
+<div class="flex gap-4 relative">
+<div class="w-12 h-12 rounded-full bg-tertiary-fixed flex items-center justify-center text-on-tertiary-fixed z-10 shrink-0">
+<span class="material-symbols-outlined">water_drop</span>
+</div>
+<div class="soft-card rounded-lg p-4 flex-1">
+<div class="flex justify-between items-start mb-1">
+<span class="text-label-md font-bold text-primary">기저귀 (소변)</span>
+<span class="text-label-sm text-on-surface-variant">12:10</span>
+</div>
+<p class="text-body-md text-on-surface-variant">발진 연고 발라줌</p>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- FAB -->
+<div class="fixed bottom-[100px] right-margin-page z-40">
+<button class="fab-gradient w-14 h-14 rounded-full flex items-center justify-center text-white shadow-[0_8px_30px_rgba(117,88,73,0.15)] active:scale-90 transition-transform">
+<span class="material-symbols-outlined text-[32px]">add</span>
+</button>
+</div>
+<!-- Bottom Navigation -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-2 pb-safe h-[80px] bg-surface-container-lowest shadow-lg rounded-t-xl">
+<button class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-full px-4 py-1 transition-all duration-200 scale-90">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">home</span>
+<span class="text-label-sm font-label-sm">홈</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-low transition-colors px-4">
+<span class="material-symbols-outlined">insights</span>
+<span class="text-label-sm font-label-sm">지표</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-low transition-colors px-4">
+<span class="material-symbols-outlined">edit_note</span>
+<span class="text-label-sm font-label-sm">기록</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-low transition-colors px-4">
+<span class="material-symbols-outlined">photo_library</span>
+<span class="text-label-sm font-label-sm">앨범</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-low transition-colors px-4">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-label-sm font-label-sm">설정</span>
+</button>
+</nav>
+<script>
+        // Interactivity for cards
+        document.querySelectorAll('.soft-card').forEach(card => {
+            card.addEventListener('mousedown', () => card.classList.add('scale-[0.98]'));
+            card.addEventListener('mouseup', () => card.classList.remove('scale-[0.98]'));
+            card.addEventListener('mouseleave', () => card.classList.remove('scale-[0.98]'));
+        });
+
+        // Header scroll behavior
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 10) {
+                header.classList.add('shadow-sm', 'backdrop-blur-md', 'bg-surface/90');
+            } else {
+                header.classList.remove('shadow-sm', 'backdrop-blur-md', 'bg-surface/90');
+            }
+        });
+    </script>
+</body></html>
